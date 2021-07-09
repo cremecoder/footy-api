@@ -1,7 +1,7 @@
-const Data = require("../models/Data")
+const { resolveData } = require("../models/Data")
 
 exports.fetchData = function (req, res) {
-  Data.resolveData("sweden")
+  resolveData("sweden")
     .then(resArr => {
       res.json(resArr)
     })

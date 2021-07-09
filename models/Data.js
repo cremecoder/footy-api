@@ -1,6 +1,6 @@
 const axios = require("axios")
 require("dotenv").config()
-const SortData = require("./SortData")
+const { sortData } = require("./SortData")
 
 function getData(country) {
   const resOne = axios.get(
@@ -12,14 +12,21 @@ function getData(country) {
       }
     }
   )
-  const resTwo = axios.get(`https://restcountries.eu/rest/v2/name/${country}`)
+  const resTwo = axios.get(
+    `https://restcountries.eu/rest/v2/all?fields=name;flag`
+  )
   return Promise.all([resOne, resTwo])
 }
 
 exports.resolveData = function (country) {
   return getData(country)
     .then(resArr => {
-      return SortData.sortData(resArr)
+      return sortData(resArr)
     })
     .catch(err => console.log(err))
 }
+
+// https://restcountries.eu/rest/v2/name/all?fields=flag
+// `https://restcountries.eu/rest/v2/name/${country}`
+// https://restcountries.eu/rest/v2/{service}?fields={field};{field};{field}
+// https://restcountries.eu/rest/v2/all?fields=name;capital;currencies
