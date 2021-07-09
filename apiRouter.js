@@ -1,5 +1,5 @@
 const apiRouter = require("express").Router()
-const testController = require("./controllers/testController")
+const dataController = require("./controllers/dataController")
 const cors = require("cors")
 require("dotenv").config()
 
@@ -9,7 +9,7 @@ apiRouter.get("/", (req, res) => {
   res.json(`App listening on port ${process.env.API_PORT}...`)
 })
 
-// http://localhost:9000/test
-apiRouter.get("/test", testController.test)
+// http://localhost:9000/api/worldcup/<country>
+apiRouter.get("/api/worldcup", dataController.fetchData)
 
 module.exports = apiRouter

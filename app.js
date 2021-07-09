@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const apiRouter = require("./apiRouter")
 const morgan = require("morgan")
 require("dotenv").config()
 
@@ -11,7 +12,7 @@ app.use(express.json())
 app.use(morgan("tiny"))
 
 /* Use apiRouter */
-app.use(require("./apiRouter"))
+app.use("/", apiRouter)
 
 /* Client listening */
 app.listen(process.env.API_PORT, () => {
