@@ -21,10 +21,9 @@ function sortMatchesData(worldCupData) {
 }
 
 function sortCountriesData(countryData) {
-  return countryData.data // all countries and names
+  return countryData.data
 }
 
-// World Cup Countries
 function getWorldCupCountries(matchesData) {
   const filterTeams = matchesData
     .map(countryObj => {
@@ -36,20 +35,12 @@ function getWorldCupCountries(matchesData) {
   return filterTeams
 }
 
-// All Countries
-// function getAllCountries(countriesData) {
-//   const filterCountries = countriesData.map(countryObj => {
-//     return countryObj.name
-//   })
-//   return filterCountries
-// }
-
-// [
-//   "Russia", as "Russian Federation"
-//   "Iran", as "Iran (Islamic Republic of)"
-//   "Korea Republic", as "Korea (Republic of)"
-//   "England", as "United Kingdom of Great Britain and Northern Ireland"
-// ]
+function getAllCountries(countriesData) {
+  const filterCountries = countriesData.map(countryObj => {
+    return countryObj.name
+  })
+  return filterCountries
+}
 
 function sorter(countriesData, worldCupCountriesArr) {
   let flags = []
@@ -61,24 +52,67 @@ function sorter(countriesData, worldCupCountriesArr) {
       ) {
         flags.push({ flag: countriesData[j].flag, name: "Russia" })
       }
+      if (
+        countriesData[j].name == "Iran (Islamic Republic of)" &&
+        worldCupCountriesArr[i] == "Iran"
+      ) {
+        flags.push({ flag: countriesData[j].flag, name: "Iran" })
+      }
+      if (
+        countriesData[j].name == "Korea (Republic of)" &&
+        worldCupCountriesArr[i] == "Korea Republic"
+      ) {
+        flags.push({ flag: countriesData[j].flag, name: "Korea Republic" })
+      }
+      if (
+        countriesData[j].name ==
+          "United Kingdom of Great Britain and Northern Ireland" &&
+        worldCupCountriesArr[i] == "England"
+      ) {
+        flags.push({ flag: countriesData[j].flag, name: "England" })
+      }
 
       if (countriesData[j].name == worldCupCountriesArr[i]) {
         flags.push(countriesData[j])
       }
     }
   }
-  return flags.length
+  return flags
+}
+
+function matches(matches, flags) {
+  let mergedArray = []
+  for (const match of matches) {
+    for (const flag of flags) {
+      if (match.homeTeam.name == flag.name) {
+        Object.assign(match.homeTeam, flag)
+      }
+    }
+  }
+
+  for (const match of matches) {
+    for (const flag of flags) {
+      if (match.awayTeam.name == flag.name) {
+        Object.assign(match.awayTeam, flag)
+        mergedArray.push(match)
+      }
+    }
+  }
+
+  return mergedArray
 }
 
 exports.sortData = function (dataArr) {
-  let matchesArr = sortMatchesData(dataArr[0])
-  let countriesArr = sortCountriesData(dataArr[1])
-  let worldCupCountries = getWorldCupCountries(matchesArr)
-  // let allCountries = getAllCountries(countriesArr)
-  let sorted = sorter(countriesArr, worldCupCountries)
-  return matchesArr
+  let matchesArr = sortMatchesData(dataArr[0]) // [{}] matches without flags
+  let countriesArr = sortCountriesData(dataArr[1]) // [{}] all country flags and names
+  let worldCupCountries = getWorldCupCountries(matchesArr) // [] arr of world cup countries
+  let allCountries = getAllCountries(countriesArr) // [] arr of all countries
+  let sorted = sorter(countriesArr, worldCupCountries) // [{}] world cup countries flags and names
+  let finished = matches(matchesArr, sorted)
+  // return matchesArr
   // return countriesArr
   // return worldCupCountries
   // return allCountries
   // return sorted
+  return finished
 }
