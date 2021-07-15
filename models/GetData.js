@@ -1,9 +1,10 @@
+// const fs = require("fs")
 const axios = require("axios")
 require("dotenv").config()
 const { sortData } = require("./SortData")
 
-function getData(country) {
-  const resOne = axios.get(
+function getApiData() {
+  const resMatches = axios.get(
     "http://api.football-data.org/v2/competitions/WC/matches",
     {
       headers: {
@@ -12,16 +13,22 @@ function getData(country) {
       }
     }
   )
-  const resTwo = axios.get(
+  const resCountries = axios.get(
     `https://restcountries.eu/rest/v2/all?fields=name;flag`
   )
-  return Promise.all([resOne, resTwo])
+  return Promise.all([resMatches, resCountries])
 }
 
-exports.resolveData = function (country) {
-  return getData(country)
+exports.resolveApiData = function () {
+  return getApiData()
     .then(resArr => {
       return sortData(resArr)
     })
     .catch(err => console.log(err))
 }
+
+// exports.query = function (country) {
+//   return new Promise((resolve, reject) => {
+//     fs.readFileSync
+//   })
+// }
