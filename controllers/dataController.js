@@ -1,7 +1,7 @@
 const { resolveData } = require("../models/Data")
 
 exports.fetchData = function (req, res) {
-  resolveData("sweden")
+  resolveData()
     .then(resArr => {
       res.json(resArr)
     })

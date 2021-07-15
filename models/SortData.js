@@ -87,18 +87,12 @@ function matches(matches, flags) {
       if (match.homeTeam.name == flag.name) {
         Object.assign(match.homeTeam, flag)
       }
-    }
-  }
-
-  for (const match of matches) {
-    for (const flag of flags) {
       if (match.awayTeam.name == flag.name) {
         Object.assign(match.awayTeam, flag)
-        mergedArray.push(match)
       }
     }
+    mergedArray.push(match)
   }
-
   return mergedArray
 }
 

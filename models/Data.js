@@ -25,8 +25,3 @@ exports.resolveData = function (country) {
     })
     .catch(err => console.log(err))
 }
-
-// https://restcountries.eu/rest/v2/name/all?fields=flag
-// `https://restcountries.eu/rest/v2/name/${country}`
-// https://restcountries.eu/rest/v2/{service}?fields={field};{field};{field}
-// https://restcountries.eu/rest/v2/all?fields=name;capital;currencies
