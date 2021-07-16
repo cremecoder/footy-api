@@ -1,5 +1,16 @@
-function sortMatchesData(worldCupData) {
-  return Object.entries(worldCupData.data.matches).map(([key, payload]) => {
+let SortData = function (resArray) {
+  this.matchesArr = this.sortMatchesData(resArray[0].data.matches)
+  this.countriesArr = resArray[1].data
+  this.worldCupCountries = this.getWorldCupCountries(this.matchesArr)
+  this.worldCupFlagsNames = this.sortWCFlags(
+    this.countriesArr,
+    this.worldCupCountries
+  )
+  this.data = this.mergeMatchesFlags(this.matchesArr, this.worldCupFlagsNames)
+}
+
+SortData.prototype.sortMatchesData = function (worldCupData) {
+  return Object.entries(worldCupData).map(([key, payload]) => {
     return {
       status: payload.status,
       stage: payload.stage,
@@ -20,7 +31,7 @@ function sortMatchesData(worldCupData) {
   })
 }
 
-function getWorldCupCountries(matchesData) {
+SortData.prototype.getWorldCupCountries = function (matchesData) {
   const filterTeams = matchesData
     .map(countryObj => {
       return Object.values(countryObj.homeTeam).join()
@@ -31,7 +42,10 @@ function getWorldCupCountries(matchesData) {
   return filterTeams
 }
 
-function sortWCFlags(countriesData, worldCupCountriesArr) {
+SortData.prototype.sortWCFlags = function (
+  countriesData,
+  worldCupCountriesArr
+) {
   let flags = []
   for (const wcCountry of worldCupCountriesArr) {
     for (const country of countriesData) {
@@ -63,7 +77,7 @@ function sortWCFlags(countriesData, worldCupCountriesArr) {
   return flags
 }
 
-function mergeMatchesFlags(matches, flags) {
+SortData.prototype.mergeMatchesFlags = function (matches, flags) {
   let mergedArray = []
   for (const match of matches) {
     for (const flag of flags) {
@@ -76,18 +90,9 @@ function mergeMatchesFlags(matches, flags) {
     }
     mergedArray.push(match)
   }
-  return mergedArray
+  return {
+    matches: mergedArray
+  }
 }
 
-exports.sortData = function (dataArr) {
-  let matchesArr = sortMatchesData(dataArr[0]) // [{}] matches without flags ===
-  let countriesArr = dataArr[1].data // [{}] all country flags and names ===
-  let worldCupCountries = getWorldCupCountries(matchesArr) // [] arr of world cup countries ===
-  let worldCupFlagsNames = sortWCFlags(countriesArr, worldCupCountries) // [{}] world cup countries flags and names
-  let merged = mergeMatchesFlags(matchesArr, worldCupFlagsNames) // [{}] finished api model
-  // return matchesArr
-  // return countriesArr
-  // return worldCupCountries
-  // return worldCupFlagsNames
-  return merged
-}
+module.exports = SortData
