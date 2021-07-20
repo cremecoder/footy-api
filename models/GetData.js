@@ -2,10 +2,10 @@ const fs = require("fs")
 const axios = require("axios")
 require("dotenv").config()
 const SortData = require("./SortData")
-const db = require("../matches.json") || null
+// const db = require("../data/matches.json") || null
 
 let GetData = function () {
-  this.apiData = null
+  this.apiData = {}
   this.reqTeam = null
   this.teamMatches = {}
   this.created = false
@@ -38,41 +38,32 @@ GetData.prototype.resolveApiData = function () {
     .catch(err => this.errors.push("Error: " + err))
 }
 
-GetData.prototype.stringifyJSON = function () {
+GetData.prototype.createMatchesJSON = function () {
   return this.resolveApiData()
     .then(sortedData => {
       let strData = JSON.stringify(sortedData)
-      this.apiData = strData
-      return this.apiData
-    })
-    .catch(err => this.errors.push("Error: " + err))
-}
-
-GetData.prototype.createMatchesJSON = function () {
-  return this.stringifyJSON()
-    .then(strData => {
-      fs.writeFileSync("matches.json", strData)
+      fs.writeFileSync("./data/matches.json", strData)
       this.created = true
       return this.created
     })
     .catch(err => this.errors.push("Error: " + err))
 }
 
-GetData.prototype.findTeam = function (reqTeam) {
-  return new Promise((resolve, reject) => {
-    if (!db.matches || !this.created) {
-      this.errors.push("DB does not yet exist")
-      reject(this.errors)
-    }
-    this.reqTeam = reqTeam
-    const findMatches = db.matches.filter(match => {
-      return (
-        match.homeTeam.name === this.reqTeam ||
-        match.awayTeam.name === this.reqTeam
-      )
-    })
-    resolve(findMatches)
-  })
-}
+// GetData.prototype.findTeam = function (reqTeam) {
+//   return new Promise((resolve, reject) => {
+//     if (!db.matches || !this.created) {
+//       this.errors.push("DB does not yet exist")
+//       reject(this.errors)
+//     }
+//     this.reqTeam = reqTeam
+//     const findMatches = db.matches.filter(match => {
+//       return (
+//         match.homeTeam.name === this.reqTeam ||
+//         match.awayTeam.name === this.reqTeam
+//       )
+//     })
+//     resolve(findMatches)
+//   })
+// }
 
 module.exports = GetData

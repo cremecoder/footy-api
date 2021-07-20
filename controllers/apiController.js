@@ -1,21 +1,30 @@
 const GetData = require("../models/GetData")
+const getData = new GetData()
 
 exports.getData = function (req, res) {
-  let getData = new GetData()
   getData
     .createMatchesJSON()
     .then(() => {
+      console.log(getData.created)
       res.json(true)
     })
     .catch(() => res.json(false))
 }
 
-exports.getTeamMatches = function (req, res) {
-  let getData = new GetData() // this.created would still be false with new obj instance!
+exports.showData = function (req, res) {
   getData
-    .findTeam(req.headers.team)
-    .then(() => {
-      res.json("yesss")
+    .resolveApiData()
+    .then(data => {
+      res.json(data)
+    })
+    .catch(() => res.json(false))
+}
+
+exports.getTeamMatches = function (req, res) {
+  getData
+    .findTeam(req.body.team)
+    .then(teams => {
+      res.json(teams)
     })
     .catch(() => res.json(false))
 }
