@@ -1,30 +1,32 @@
 const GetData = require("../models/GetData")
-const getData = new GetData()
+// const getData = new GetData()
 
 exports.getData = function (req, res) {
+  const getData = new GetData()
   getData
     .createMatchesJSON()
     .then(() => {
-      console.log(getData.created)
-      res.json(true)
+      res.json(getData.created)
     })
-    .catch(() => res.json(false))
+    .catch(() => res.json(getData.errors))
 }
 
 exports.showData = function (req, res) {
+  const getData = new GetData()
   getData
     .resolveApiData()
     .then(data => {
       res.json(data)
     })
-    .catch(() => res.json(false))
+    .catch(() => res.json(getData.errors))
 }
 
 exports.getTeamMatches = function (req, res) {
+  const getData = new GetData()
   getData
     .findTeam(req.body.team)
-    .then(teams => {
-      res.json(teams)
+    .then(reqTeam => {
+      res.json(reqTeam)
     })
-    .catch(() => res.json(false))
+    .catch(() => res.json(getData.errors))
 }

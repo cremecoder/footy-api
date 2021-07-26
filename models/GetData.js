@@ -2,9 +2,9 @@ const fs = require("fs")
 const axios = require("axios")
 require("dotenv").config()
 const SortData = require("./SortData")
-// const db = require("../data/matches.json") || null
 
 let GetData = function () {
+  this.db = null
   this.apiData = {}
   this.reqTeam = null
   this.teamMatches = {}
@@ -42,16 +42,30 @@ GetData.prototype.createMatchesJSON = function () {
   return this.resolveApiData()
     .then(sortedData => {
       let strData = JSON.stringify(sortedData)
-      fs.writeFileSync("./data/matches.json", strData)
+      return fs.writeFileSync("./data/matches.json", strData)
+    })
+    .then(() => {
+      this.db = require("../data/matches.json")
       this.created = true
+      console.log(this)
       return this.created
     })
     .catch(err => this.errors.push("Error: " + err))
 }
 
+GetData.prototype.findTeam = function (reqTeam) {
+  return new Promise((resolve, reject) => {
+    if (this.errors.length > 0) {
+      reject(this.errors)
+    }
+
+    resolve(this)
+  })
+}
+
 // GetData.prototype.findTeam = function (reqTeam) {
 //   return new Promise((resolve, reject) => {
-//     if (!db.matches || !this.created) {
+//     if (!this.created) {
 //       this.errors.push("DB does not yet exist")
 //       reject(this.errors)
 //     }

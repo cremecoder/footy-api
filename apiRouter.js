@@ -13,10 +13,10 @@ apiRouter.get("/", (req, res) => {
 
 // http://localhost:9000/api/worldcup --- ON PAGE LOAD
 apiRouter.get("/api/worldcup", apiController.getData)
-// http://localhost:9000/showData --- Just show data in json format
-apiRouter.get("/showData", apiController.showData)
+// http://localhost:9000/api/showData --- Just show data in json format
+apiRouter.get("/api/showData", apiController.showData)
 
-// http://localhost:9000/api/worldcup --- QUERY
-apiRouter.post("/api/worldcup/:team", apiController.getTeamMatches)
+// http://localhost:9000/api/worldcup/<team> --- QUERY
+apiRouter.post("/api/worldcup/findMatches", apiController.getTeamMatches)
 
 module.exports = apiRouter
