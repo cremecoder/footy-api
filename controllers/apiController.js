@@ -1,8 +1,7 @@
 const GetData = require("../models/GetData")
-// const getData = new GetData()
+const getData = new GetData()
 
 exports.getData = function (req, res) {
-  const getData = new GetData()
   getData
     .createMatchesJSON()
     .then(() => {
@@ -12,7 +11,6 @@ exports.getData = function (req, res) {
 }
 
 exports.showData = function (req, res) {
-  const getData = new GetData()
   getData
     .resolveApiData()
     .then(data => {
@@ -22,11 +20,10 @@ exports.showData = function (req, res) {
 }
 
 exports.getTeamMatches = function (req, res) {
-  const getData = new GetData()
   getData
     .findTeam(req.body.team)
-    .then(reqTeam => {
-      res.json(reqTeam)
+    .then(() => {
+      res.json(getData.teamMatches)
     })
     .catch(() => res.json(getData.errors))
 }

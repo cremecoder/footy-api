@@ -90,9 +90,8 @@ SortData.prototype.mergeMatchesFlags = function (matches, flags) {
     }
     mergedArray.push(match)
   }
-  return {
-    matches: mergedArray
-  }
+
+  return mergedArray
 }
 
 module.exports = SortData

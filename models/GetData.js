@@ -2,11 +2,10 @@ const fs = require("fs")
 const axios = require("axios")
 require("dotenv").config()
 const SortData = require("./SortData")
+const { match } = require("assert")
 
 let GetData = function () {
-  this.db = null
   this.apiData = {}
-  this.reqTeam = null
   this.teamMatches = {}
   this.created = false
   this.errors = []
@@ -45,39 +44,24 @@ GetData.prototype.createMatchesJSON = function () {
       return fs.writeFileSync("./data/matches.json", strData)
     })
     .then(() => {
-      this.db = require("../data/matches.json")
       this.created = true
-      console.log(this)
       return this.created
     })
     .catch(err => this.errors.push("Error: " + err))
 }
 
-GetData.prototype.findTeam = function (reqTeam) {
+GetData.prototype.findTeam = async function (team) {
   return new Promise((resolve, reject) => {
-    if (this.errors.length > 0) {
-      reject(this.errors)
+    this.apiData = require("../data/matches.json")
+    if (this.apiData.length) {
+      this.teamMatches = this.apiData.filter(match => {
+        return match.homeTeam.name == team || match.awayTeam.name == team
+      })
+      resolve(this.teamMatches)
     }
-
-    resolve(this)
+    this.errors.push("No matches")
+    reject(this.errors)
   })
 }
-
-// GetData.prototype.findTeam = function (reqTeam) {
-//   return new Promise((resolve, reject) => {
-//     if (!this.created) {
-//       this.errors.push("DB does not yet exist")
-//       reject(this.errors)
-//     }
-//     this.reqTeam = reqTeam
-//     const findMatches = db.matches.filter(match => {
-//       return (
-//         match.homeTeam.name === this.reqTeam ||
-//         match.awayTeam.name === this.reqTeam
-//       )
-//     })
-//     resolve(findMatches)
-//   })
-// }
 
 module.exports = GetData
