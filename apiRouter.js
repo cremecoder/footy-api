@@ -1,14 +1,13 @@
 const apiRouter = require("express").Router()
 const cors = require("cors")
 const apiController = require("./controllers/apiController")
-require("dotenv").config()
 
 /* Allow cross-origin requests */
 apiRouter.use(cors())
 
 /* apiRouter is running... */
 apiRouter.get("/", (req, res) => {
-  res.json(`API listening on port ${process.env.API_PORT}...`)
+  res.json("API listening on port 9000...")
 })
 
 // http://localhost:9000/api/worldcup --- ON PAGE LOAD

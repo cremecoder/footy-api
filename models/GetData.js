@@ -1,6 +1,5 @@
 const fs = require("fs")
 const axios = require("axios")
-require("dotenv").config()
 const SortData = require("./SortData")
 
 let GetData = function () {
@@ -15,7 +14,7 @@ GetData.prototype.getApiData = function () {
     "http://api.football-data.org/v2/competitions/WC/matches",
     {
       headers: {
-        "X-Auth-Token": process.env.FOOTBALL_DATA_TOKEN,
+        "X-Auth-Token": "ec8536c1e05544e284af76ed65c56c22",
         "Content-Type": "application/JSON; charset=utf-8"
       }
     }
