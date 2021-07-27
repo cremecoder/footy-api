@@ -2,7 +2,6 @@ const fs = require("fs")
 const axios = require("axios")
 require("dotenv").config()
 const SortData = require("./SortData")
-const { match } = require("assert")
 
 let GetData = function () {
   this.apiData = {}
@@ -53,12 +52,13 @@ GetData.prototype.createMatchesJSON = function () {
 GetData.prototype.findTeam = async function (team) {
   return new Promise((resolve, reject) => {
     this.apiData = require("../data/matches.json")
-    if (this.apiData.length) {
-      this.teamMatches = this.apiData.filter(match => {
-        return match.homeTeam.name == team || match.awayTeam.name == team
-      })
-      resolve(this.teamMatches)
-    }
+    this.teamMatches = this.apiData.matches.filter(match => {
+      return (
+        match.homeTeam.name.toLowerCase() == team ||
+        match.awayTeam.name.toLowerCase() == team
+      )
+    })
+    resolve(this.teamMatches)
     this.errors.push("No matches")
     reject(this.errors)
   })

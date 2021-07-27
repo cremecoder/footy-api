@@ -23,7 +23,11 @@ exports.getTeamMatches = function (req, res) {
   getData
     .findTeam(req.body.team)
     .then(() => {
-      res.json(getData.teamMatches)
+      res.json({
+        matches: getData.teamMatches
+      })
     })
-    .catch(() => res.json(getData.errors))
+    .catch(() => {
+      res.json(getData.errors)
+    })
 }

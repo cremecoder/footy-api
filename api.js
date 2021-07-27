@@ -1,21 +1,10 @@
-const fs = require("fs")
 const express = require("express")
 const api = express()
 const morgan = require("morgan")
 require("dotenv").config()
 
-/* Delete matches.json */
-// if (fs.existsSync("./data/matches.json")) {
-//   fs.unlink("./data/matches.json", err => {
-//     if (err) {
-//       console.log(err)
-//     }
-//     console.log("deleted")
-//   })
-// }
-
 /* Allow Express to recognise requests and JSON */
-api.use(express.urlencoded({ extended: false })) // ? false ?
+api.use(express.urlencoded({ extended: false }))
 api.use(express.json())
 
 /* Morgan listening for http requests */
