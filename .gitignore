@@ -1,4 +1,5 @@
-node_modules
+node_modules/
 .DS_Store
-dump
+dump/
 matches.json
+matches2.json

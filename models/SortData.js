@@ -1,3 +1,4 @@
+/* Constructor - SortData merges both API JSON returns into one */
 let SortData = function (resArray) {
   this.matchesArr = this.sortMatchesData(resArray[0].data.matches)
   this.countriesArr = resArray[1].data
@@ -9,6 +10,9 @@ let SortData = function (resArray) {
   this.data = this.mergeMatchesFlags(this.matchesArr, this.worldCupFlagsNames)
 }
 
+/* #1 
+- Remove unwanted properties from matches data 
+*/
 SortData.prototype.sortMatchesData = function (worldCupData) {
   return Object.entries(worldCupData).map(([key, payload]) => {
     return {
@@ -31,6 +35,9 @@ SortData.prototype.sortMatchesData = function (worldCupData) {
   })
 }
 
+/* #2 
+- Filter through world cup matches and return array of teams that participated 
+*/
 SortData.prototype.getWorldCupCountries = function (matchesData) {
   const filterTeams = matchesData
     .map(countryObj => {
@@ -42,6 +49,11 @@ SortData.prototype.getWorldCupCountries = function (matchesData) {
   return filterTeams
 }
 
+/* #3
+- Loops through all world countries flags and names 
+- Loops through array of participating countries
+- Extracts country names and svg flag
+*/
 SortData.prototype.sortWCFlags = function (
   countriesData,
   worldCupCountriesArr
@@ -50,33 +62,35 @@ SortData.prototype.sortWCFlags = function (
   for (const wcCountry of worldCupCountriesArr) {
     for (const country of countriesData) {
       if (country.name == "Russian Federation" && wcCountry == "Russia") {
-        flags.push({ flag: country.flag, name: "Russia" })
+        flags.push({ flag: country.flags[0], name: "Russia" })
       }
       if (country.name == "Iran (Islamic Republic of)" && wcCountry == "Iran") {
-        flags.push({ flag: country.flag, name: "Iran" })
+        flags.push({ flag: country.flags[0], name: "Iran" })
       }
       if (
         country.name == "Korea (Republic of)" &&
         wcCountry == "Korea Republic"
       ) {
-        flags.push({ flag: country.flag, name: "Korea Republic" })
+        flags.push({ flag: country.flags[0], name: "Korea Republic" })
       }
       if (
         country.name ==
           "United Kingdom of Great Britain and Northern Ireland" &&
         wcCountry == "England"
       ) {
-        flags.push({ flag: country.flag, name: "England" })
+        flags.push({ flag: country.flags[0], name: "England" })
       }
 
-      if (country.name == wcCountry) {
-        flags.push(country)
-      }
+      flags.push({ flag: country.flags[0], name: country.name })
     }
   }
   return flags
 }
 
+/* #4 
+- Merges match objects (no flag) with flag objects
+- This is returned to GetData.js 
+*/
 SortData.prototype.mergeMatchesFlags = function (matches, flags) {
   let mergedArray = []
   for (const match of matches) {

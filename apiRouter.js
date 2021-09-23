@@ -10,12 +10,13 @@ apiRouter.get("/", (req, res) => {
   res.json("API listening on port 9000...")
 })
 
-// http://localhost:9000/api/worldcup --- ON PAGE LOAD
+/* On page load */
 apiRouter.get("/api/worldcup", apiController.getData)
-// http://localhost:9000/api/showData --- Just show data in json format
+
+/* Just show data in json format */
 apiRouter.get("/api/showData", apiController.showData)
 
-// http://localhost:9000/api/worldcup/<team> --- QUERY
+/* Post request team matches */
 apiRouter.post("/api/worldcup/findMatches", apiController.getTeamMatches)
 
 module.exports = apiRouter

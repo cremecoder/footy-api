@@ -1,6 +1,7 @@
 const GetData = require("../models/GetData")
 const getData = new GetData()
 
+/* On page load - returns boolean */
 exports.getData = function (req, res) {
   getData
     .createMatchesJSON()
@@ -10,6 +11,7 @@ exports.getData = function (req, res) {
     .catch(() => res.json(getData.errors))
 }
 
+/* Returns matches json  */
 exports.showData = function (req, res) {
   getData
     .resolveApiData()
@@ -19,6 +21,7 @@ exports.showData = function (req, res) {
     .catch(() => res.json(getData.errors))
 }
 
+/* Returns requested teams matches in json format */
 exports.getTeamMatches = function (req, res) {
   getData
     .findTeam(req.body.team)
