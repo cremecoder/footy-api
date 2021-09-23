@@ -14,18 +14,13 @@ let GetData = function () {
 - Fetches API's 
 */
 GetData.prototype.getApiData = function () {
-  const resMatches = axios.get(
-    "http://api.football-data.org/v2/competitions/WC/matches",
-    {
-      headers: {
-        "X-Auth-Token": "ec8536c1e05544e284af76ed65c56c22",
-        "Content-Type": "application/JSON; charset=utf-8"
-      }
+  const resMatches = axios.get(process.env.FOOTBALLDATAAPI, {
+    headers: {
+      "X-Auth-Token": process.env.XAUTHTOKEN,
+      "Content-Type": "application/JSON; charset=utf-8"
     }
-  )
-  const resCountries = axios.get(
-    `https://restcountries.com/v2/all?fields=name,flags`
-  )
+  })
+  const resCountries = axios.get(process.env.FLAGSAPI)
   return Promise.all([resMatches, resCountries])
 }
 

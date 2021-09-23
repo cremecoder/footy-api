@@ -3,3 +3,4 @@ node_modules/
 dump/
 matches.json
 matches2.json
+.env

@@ -1,6 +1,8 @@
 const express = require("express")
 const api = express()
 const morgan = require("morgan")
+require("dotenv").config()
+const port = process.env.PORT
 
 /* Allow Express to recognise requests and JSON */
 api.use(express.urlencoded({ extended: false }))
@@ -13,8 +15,8 @@ api.use(morgan("tiny"))
 api.use("/", require("./apiRouter"))
 
 /* API is listening */
-api.listen(9000, () => {
-  console.log("Api listening on port 9000...")
+api.listen(port, () => {
+  console.log(`Api listening on port ${port}...`)
 })
 
 module.exports = api
