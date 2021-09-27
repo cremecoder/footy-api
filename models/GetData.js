@@ -54,16 +54,16 @@ GetData.prototype.createMatchesJSON = function () {
     .catch(err => this.errors.push("Error: " + err))
 }
 
-/* #4
+/* #4 
 - Handles POST req from client, returns JSON object 
 */
-GetData.prototype.findTeam = async function (team) {
+GetData.prototype.findTeam = function (team) {
   return new Promise((resolve, reject) => {
     this.apiData = require("../data/matches2.json")
+    let regExp = new RegExp(team, "gi")
     this.teamMatches = this.apiData.matches.filter(match => {
       return (
-        match.homeTeam.name.toLowerCase() == team ||
-        match.awayTeam.name.toLowerCase() == team
+        regExp.test(match.homeTeam.name) || regExp.test(match.awayTeam.name)
       )
     })
     resolve(this.teamMatches)
