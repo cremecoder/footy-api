@@ -61,27 +61,30 @@ SortData.prototype.sortWCFlags = function (
   let flags = []
   for (const wcCountry of worldCupCountriesArr) {
     for (const country of countriesData) {
-      if (country.name == "Russian Federation" && wcCountry == "Russia") {
-        flags.push({ flag: country.flags[0], name: "Russia" })
-      }
-      if (country.name == "Iran (Islamic Republic of)" && wcCountry == "Iran") {
-        flags.push({ flag: country.flags[0], name: "Iran" })
+      if (country.name === "Russian Federation" && wcCountry === "Russia") {
+        flags.push({ flag: country.flags.svg, name: "Russia" })
       }
       if (
-        country.name == "Korea (Republic of)" &&
-        wcCountry == "Korea Republic"
+        country.name === "Iran (Islamic Republic of)" &&
+        wcCountry === "Iran"
       ) {
-        flags.push({ flag: country.flags[0], name: "Korea Republic" })
+        flags.push({ flag: country.flags.svg, name: "Iran" })
       }
       if (
-        country.name ==
+        country.name === "Korea (Republic of)" &&
+        wcCountry === "Korea Republic"
+      ) {
+        flags.push({ flag: country.flags.svg, name: "Korea Republic" })
+      }
+      if (
+        country.name ===
           "United Kingdom of Great Britain and Northern Ireland" &&
-        wcCountry == "England"
+        wcCountry === "England"
       ) {
-        flags.push({ flag: country.flags[0], name: "England" })
+        flags.push({ flag: country.flags.svg, name: "England" })
       }
 
-      flags.push({ flag: country.flags[0], name: country.name })
+      flags.push({ flag: country.flags.svg, name: country.name })
     }
   }
   return flags
@@ -95,10 +98,10 @@ SortData.prototype.mergeMatchesFlags = function (matches, flags) {
   let mergedArray = []
   for (const match of matches) {
     for (const flag of flags) {
-      if (match.homeTeam.name == flag.name) {
+      if (match.homeTeam.name === flag.name) {
         Object.assign(match.homeTeam, flag)
       }
-      if (match.awayTeam.name == flag.name) {
+      if (match.awayTeam.name === flag.name) {
         Object.assign(match.awayTeam, flag)
       }
     }
