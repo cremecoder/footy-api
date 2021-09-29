@@ -1,15 +1,14 @@
 const apiRouter = require("express").Router()
 const cors = require("cors")
 const apiController = require("./controllers/apiController")
-require("dotenv").config()
-const port = process.env.PORT
+const jsonExample = require("./data/model.json")
 
 /* Allow cross-origin requests */
 apiRouter.use(cors())
 
 /* apiRouter is running... */
 apiRouter.get("/", (req, res) => {
-  res.json(`API listening on port ${port}...`)
+  res.json(jsonExample)
 })
 
 /* On page load */
