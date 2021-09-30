@@ -2,9 +2,9 @@
 
 This repo contains the source files for my World Cup 2018 REST API, using **Node.js** with **Express.js** framework.
 
-> Visit the URL for the api here.
+> Visit the URL for the [api here](https://worldcup2018-api.herokuapp.com).
 >
-> See the frontend project I have created which consumes this API.
+> See the [frontend project](https://vigorous-spence-f64f9f.netlify.app/) I have created which consumes this API.
 
 <br>
 
@@ -89,6 +89,3 @@ fetch("https://worldcup2018-api.herokuapp.com/api/worldcup/findMatches", {
     console.error(err)
 })
 ```
-
-[api here]: https://worldcup2018-api.herokuapp.com
-[frontend project]: https://vigorous-spence-f64f9f.netlify.app/
