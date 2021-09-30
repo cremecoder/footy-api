@@ -23,7 +23,7 @@ This is one of two parts of my fullstack project World Cup 2018 Fixtures. The pr
 
 ## Instructions
 
-To make use these files locally, you can read below:
+To use these files locally, see below:
 
 ```
 npm install
@@ -31,61 +31,61 @@ npm install
 npm start
 ```
 
-- `npm install` will install dependencies and create `node_modules` folder.
-- `npm start` will spin up the server and listen for incoming requests.
+- **`npm install`** will install dependencies and create `node_modules` folder.
+- **`npm start`** will spin up the server and listen for incoming requests.
 
 <br>
 
 ## Files
 
-- `controllers/apiController.js` Middleware functions controlling requests and responses.
-- `data/`
-  - `model.json` This is a reference file for the expected JSON format of each match fixture.
-  - `matches2.json` The main database file, which is created here upon the first instance of a **GET** request to the _/api/worldcup_ endpoint.
-- `models/`
-  - `GetData.js` Constructor function with methods that handle promise based operations and passes responses to `apiController.js`
-  - `SortData.js` Contructor function with methods that handle sorting API data from `GetData.js` and returns the desired format for the database.
-- `api.js` Main entry point for the application.
-- `apiRouter.js` Handles **GET** and **POST** requests.
+- **`controllers/apiController.js`** Middleware functions controlling requests and responses.
+- **`data/`**
+  - **`model.json`** This is a reference file for the expected JSON format of each match fixture.
+  - **`matches2.json`** The main database file, which is created here upon the first instance of a **GET** request to the _/api/worldcup_ endpoint.
+- **`models/`**
+  - **`GetData.js`** Constructor function with methods that handle promise based operations and passes responses to **`apiController.js`**
+  - **`SortData.js`** Contructor function with methods that handle sorting API data from **`GetData.js`** and returns the desired format for the database.
+- **`api.js`** Main entry point for the application.
+- **`apiRouter.js`** Handles **GET** and **POST** requests.
 
 <br>
 
 ## Endpoints
 
-> `GET`
+> **`GET`**
 >
-> `/` Returns a JSON object example of a match fixture expected from this API.
+> **`/`** Returns a JSON object example of a match fixture expected from this API.
 >
-> `/api/worldcup` Returns boolean value dependant on:
+> **`/api/worldcup`** Returns boolean value dependant on:
 >
-> - **A.** Initially creating the database file `matches2.json`.
+> - **A.** Initially creating the database file **`matches2.json`**.
 > - **B.** Any further requests to read the file.
 >
-> `/api/showData` Returns a JSON object containing an array of all of the match fixtures for the competition.
+> **`/api/showData`** Returns a JSON object containing an array of all of the match fixtures for the competition.
 >
-> `POST`
+> **`POST`**
 >
-> `/api/worldcup/findMatches` Returns JSON object containing an array of all of the match fixtures for a requested team.
+> **`/api/worldcup/findMatches`** Returns JSON object containing an array of all of the match fixtures for a requested team.
 
 <br>
 
 ### Example **POST** request using Javascript's Fetch API:
 
-```
+```js
 const team = "england"
 
 fetch("https://worldcup2018-api.herokuapp.com/api/worldcup/findMatches", {
   method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ team })
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data.matches)
-    })
-    .catch(err => {
-    console.error(err)
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ team })
 })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data.matches)
+  })
+  .catch(err => {
+    console.error(err)
+  })
 ```
