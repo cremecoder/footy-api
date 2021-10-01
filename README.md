@@ -4,7 +4,7 @@ This repo contains the source files for my World Cup 2018 REST API, using **Node
 
 > Visit the URL for the [api here](https://worldcup2018-api.herokuapp.com).
 >
-> See the [frontend project](https://vigorous-spence-f64f9f.netlify.app/) I have created which consumes this API.
+> See the [frontend project](https://vigorous-spence-f64f9f.netlify.app/) I have created which consumes this API, or view the [repo here.](https://github.com/cremecoder/footy-frontend)
 
 <br>
 
@@ -16,7 +16,7 @@ This is one of two parts of my fullstack project World Cup 2018 Fixtures. The pr
 - Pulling in two API calls from third parties:
   - Promise based handling of the third party API data.
   - Sorting through the two sets of JSON data and returning the desired format for the match fixtures.
-- Constructors with prototype functions for the data models.
+- Constructors with prototype methods for the data models.
 - Creating a JSON database.
 
 <br>
@@ -41,7 +41,7 @@ npm start
 - **`controllers/apiController.js`** Middleware functions controlling requests and responses.
 - **`data/`**
   - **`model.json`** This is a reference file for the expected JSON format of each match fixture.
-  - **`matches2.json`** The main database file, which is created here upon the first instance of a **GET** request to the _/api/worldcup_ endpoint.
+  - **`matches2.json`** The main database file, which is created upon the first instance of a **GET** request to the _/api/worldcup_ endpoint.
 - **`models/`**
   - **`GetData.js`** Constructor function with methods that handle promise based operations and passes responses to **`apiController.js`**
   - **`SortData.js`** Contructor function with methods that handle sorting API data from **`GetData.js`** and returns the desired format for the database.
